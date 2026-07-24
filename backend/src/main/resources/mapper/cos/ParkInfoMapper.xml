@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.ParkInfoMapper">
+
+    <!-- 分页获取停车场信息 -->
+    <select id="queryPage" resultType="java.util.LinkedHashMap">
+        SELECT
+        id,
+        lot_id,
+        lot_name,
+        lot_type,
+        total_spaces,
+        address,
+        latitude,
+        longitude
+        FROM
+        park_info
+        WHERE
+        1 = 1
+        <if test="parkInfo.lotName != null and parkInfo.lotName != ''">
+            AND lot_name LIKE CONCAT('%',#{parkInfo.lotName},'%')
+        </if>
+        <if test="parkInfo.lotType != null and parkInfo.lotType != ''">
+            AND lot_type = #{parkInfo.lotType}
+        </if>
+        ORDER BY
+        id DESC
+    </select>
+</mapper>

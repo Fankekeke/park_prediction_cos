@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.ParkRecordMapper">
+
+    <!-- 分页获取停车记录信息 -->
+    <select id="queryPage" resultType="java.util.LinkedHashMap">
+        SELECT
+        id,
+        record_id,
+        plate_no,
+        lot_id,
+        lot_name,
+        lot_type,
+        entry_gate,
+        exit_gate,
+        entry_time,
+        exit_time,
+        duration_min,
+        user_type,
+        space_no,
+        pay_amount,
+        discount,
+        coupon,
+        pay_method,
+        is_holiday,
+        is_workday_adjust,
+        is_weekend,
+        weekday,
+        weather,
+        temp_avg,
+        wind_level
+
+        FROM
+        park_record
+        WHERE
+        1 = 1
+        <if test="parkRecord.plateNo != null and parkRecord.plateNo != ''">
+            AND plate_no LIKE CONCAT('%',#{parkRecord.plateNo},'%')
+        </if>
+        <if test="parkRecord.lotName != null and parkRecord.lotName != ''">
+            AND lot_name LIKE CONCAT('%',#{parkRecord.lotName},'%')
+        </if>
+        <if test="parkRecord.userType != null and parkRecord.userType != ''">
+            AND user_type = #{parkRecord.userType}
+        </if>
+        <if test="parkRecord.spaceNo != null and parkRecord.spaceNo != ''">
+            AND space_no LIKE CONCAT('%',#{parkRecord.spaceNo},'%')
+        </if>
+        ORDER BY
+        id DESC
+    </select>
+</mapper>
