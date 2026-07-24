@@ -1,2 +1,2 @@
 # park_prediction_cos
-基于LSTM的城市区域停车位预测系统
+基于LSTM的大屏可视化与数据挖掘的多园区停车位预测系统
