@@ -48,7 +48,7 @@ public class FaceRecognitionController {
         String base64EncoderImg = base64Encoder.encode(file.getBytes());
         String result = faceRecognition.registered(base64EncoderImg, name);
         if ("success".equals(result)) {
-            String localPath="G:/Project/停车场管理系统/db";
+            String localPath="G:/Project/20260729停车位预测系统/db";
             String fileName=file.getOriginalFilename();
             String newFileName = FileUtil.upload(file, localPath, fileName);
             ownerInfoService.update(Wrappers.<UserInfo>lambdaUpdate().set(UserInfo::getUserImages, newFileName).eq(UserInfo::getId, ownerId));

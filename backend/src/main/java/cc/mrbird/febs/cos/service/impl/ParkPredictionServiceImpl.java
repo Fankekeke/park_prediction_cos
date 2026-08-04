@@ -2,11 +2,13 @@
 package cc.mrbird.febs.cos.service.impl;
 
 import cc.mrbird.febs.common.utils.HolidayUtil;
+import cc.mrbird.febs.cos.dao.ParkRecordMapper;
 import cc.mrbird.febs.cos.entity.ParkRecord;
 import cc.mrbird.febs.cos.service.IParkPredictionService;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -36,7 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ParkPredictionServiceImpl implements IParkPredictionService {
 
-    private final ParkRecordServiceImpl parkRecordService;
+    private final ParkRecordMapper parkRecordService;
 
     /**
      * 滑动窗口大小（天）
@@ -83,7 +85,7 @@ public class ParkPredictionServiceImpl implements IParkPredictionService {
     public LinkedHashMap<String, Object> predictNextMonth() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
-        List<ParkRecord> allRecords = parkRecordService.list();
+        List<ParkRecord> allRecords = parkRecordService.selectList(Wrappers.<ParkRecord>lambdaQuery());
         if (allRecords == null || allRecords.isEmpty()) {
             result.put("status", "error");
             result.put("message", "暂无停车记录数据");
